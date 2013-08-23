@@ -36,14 +36,16 @@
 <div class="container" id="sudoku">
 	<table class="table table-bordered">
 	<tbody>
-		{% for row in grid %}
+		{% for row in "9"|range_list %}
 			<tr>
 			{% with forloop.counter0 as out_counter %}
-			{% for element in row %}
+			{% for element in "9"|range_list %}
 				<td>
 					{% with out_counter|multiply:9 as in_counter %}
 					{% with in_counter|addition:forloop.counter0 as unique_id %}
-						<input name="{{ unique_id }}" id="box{{ unique_id }}" type="number" min="1" max="9" style="border:none"/>
+					<!-- WHY isnt the input tag working validating the input automatically???? -->
+					<!-- Name and ID of each square is set to to an integer - (0 to 80) inclusive, ROW MAJOR -->
+						<input name="{{ unique_id }}" id="{{ unique_id }}" type="number" min="1" max="9" style="border:none"/>
 					{% endwith %}
 					{% endwith %}
 				</td>
@@ -62,18 +64,9 @@
 {% block scripts %}
 <script type="text/javascript">
 	$(document).ready(function() {
-
-		{% for i in "81"|range_list %}
-		$("#box{{ i }}").validate({
-			rules: {
-				amount: {
-					required: true,
-					digits: true
-				}
-			}
-		});
-		{% endfor %}
-
+		// Need 2 things.
+		// 1. Minimum Boxes filled constraint - 10-16 say
+		// 2. Ensure all are single digit integers from 1-9 inclusive
 
 		function getCookie(name) {
 			var cookieValue = null;

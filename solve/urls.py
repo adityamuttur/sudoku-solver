@@ -7,6 +7,3 @@ urlpatterns = patterns('',
 	url(r'^solution/$', views.solve_sudoku, name='solution'),
 	url(r'^nosolution/$', views.no_solution, name='no_solution'),
 )
-
-# url(r'^(?P<poll_id>\d+)/vote/$', views.vote, name='vote'),
-# url(r'^(?P<poll_id>\d+)/ajaxvote/$', views.ajax_vote, name='ajax_vote'),

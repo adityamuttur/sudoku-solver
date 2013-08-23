@@ -1,13 +1,13 @@
-import re
 import os
-import random
-import logging
+import sys
 import copy
-import signal, os
-
-def handler(signum, frame):
-	signal.alarm(0)
-	raise Exception("Couldn't Solve")
+import time
+import errno
+import Queue
+import signal
+import logging
+import threading
+from   functools import wraps
 
 logger = logging.getLogger(__name__)
 
@@ -28,6 +28,7 @@ class Solution(object):
 		self.input_grid = input_grid
 		self.grid_size = 81
 		self.grid = copy.deepcopy(self.input_grid)
+		self.is_solution = False
 
 	def isFull(self):
 		return self.grid.count('.') == 0
@@ -95,28 +96,32 @@ class Solution(object):
 					self.grid = self.setCell(trialVal, trialCelli)
 					if self._hasSolution() == True:
 						solution_found = True
+						self.is_solution = solution_found
 						return True
 					else:
 						self.clearCell( trialCelli )
 				trialVal += 1
+			self.is_solution = solution_found
 			return solution_found
 
 	def hasSolution(self):
-		try:
-			signal.signal(signal.SIGALRM, handler)
-			signal.alarm(5)
-			return self._hasSolution()
-		except:
-			signal.alarm(0)
-			return False
+		return self._hasSolution()
 
 	def returnGrid(self=None):
 		if not self.hasSolution():
+			# Calling hasSolution not only checks if the sudoku has a solution
+			# but is also responsible for setting the solution to the grid into 
+			# self.grid list element
+			# Thus hasSolution() HAS TO BE called here in order to set the solution
+			# Solution is set into a single list called self.grid
 			logger.error("No Solution")
+			# Trying to use the ogging module. But the fucking logfiles aren't being created
 			return False
 		i = 0
 		solution_grid = []
 		solution_row = []
+		# The following for loop is only responsible for converting the linear
+		# list into a 2d square grid type(nested list)
 		for val in self.grid:
 			solution_row.append(int(val))
 			i +=1

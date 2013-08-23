@@ -9,8 +9,13 @@ temp_context =  {
 					'nothing':[]
 				}
 def input_sudoku(request):
-	return render(request, 'solve/input.html', temp_context)
+	return render(request, 'solve/input.html')
 
+# Want to use the solve_sudoku view to receive post call with input grid and then have it
+# redirected (HttpResponseRedirect) to the display_sudoku view (since its a good practice)
+# But can't send context variables through HttpResponseRedirect so can't send the solved
+# drid to the sudoku grid to the display_sudoku view.
+# NOT sure how to go about it
 def solve_sudoku(request):
 	pass
 
@@ -26,8 +31,12 @@ def display_sudoku(request):
 		else:
 			sudoku_input.append(input_character)
 
-	sudoku = Solution(sudoku_input)
-	if not sudoku.hasSolution():
+	# returnGrid return a 'bool' if no solution or if function timesout.
+	# then it takes it to so solution page
+	# The timer has to be put in solution.py. NOT yet working
+	# View currently working for valid inputs
+	sudoku_solution = Solution(sudoku_input).returnGrid()
+	if not sudoku_solution:
 		return HttpResponseRedirect(reverse('solve:no_solution'))
 	else:
-		return render(request, 'solve/display.html', {"grid":sudoku.returnGrid()})
+		return render(request, 'solve/display.html', {"grid":sudoku_solution})
