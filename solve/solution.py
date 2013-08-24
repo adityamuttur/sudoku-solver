@@ -7,9 +7,21 @@ import Queue
 import signal
 import logging
 import threading
-from   functools import wraps
 
 logger = logging.getLogger(__name__)
+
+class FuncThread(threading.Thread):
+	def __init__(self, func):
+		threading.Thread.__init__(self)
+		self.result = None
+		self.func = func
+
+	def run(self):
+		self.result = self.func()
+
+	def _stop(self):
+		if self.isAlive():
+			threading.Thread._Thread__stop(self)
 
 class Solution(object):
 	def __init__(self, input_grid=None):
@@ -105,7 +117,20 @@ class Solution(object):
 			return solution_found
 
 	def hasSolution(self):
-		return self._hasSolution()
+		it = FuncThread(self._hasSolution)
+		# starts the thread....
+		it.start()
+		# blocks the main thread for 5 seconds and then returns
+		# parallel to the execution of the other function
+		it.join(5)
+		if it.isAlive():
+			# if the thread is still alive after 5 secs, kill it
+			# not sure of the after effects of terminating a thread like this
+			# throws unhandled excecptions when the django-server is stopped
+			it._stop()
+			return False
+		else:
+			return it.result
 
 	def returnGrid(self=None):
 		if not self.hasSolution():
