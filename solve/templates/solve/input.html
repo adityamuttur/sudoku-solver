@@ -1,18 +1,19 @@
 {% extends "base.html" %}
 {% load extras %}
 {% block stylesheets %}
-	<style type="text/css">
+<style type="text/css">
 	.parentCube {
 		height:40px;
 	}
 	.childCube {
 		width:99px;
 	}
-	input[type="number"]
-	{
+	input[type="number"] {
 		padding:0px;
 		margin-bottom:0px;
 		border:none;
+		width: 100%;
+		!important;
 	}​
 	textarea:focus, input:focus{
 		outline: 0;
@@ -20,44 +21,42 @@
 	*:focus {
 		outline: 0;
 	}
-	table { 
-		border-spacing:10;
-		border-collapse:collapse;
-	}
-	</style>
+</style>
 {% endblock %}
 
 {% block content %}
 
 <br><br><br><br>
 
-<form name="sudokuInput" method="post" action="{% url 'solve:display' %}">
-{% csrf_token %}
 <div class="container" id="sudoku">
-	<table class="table table-bordered">
-	<tbody>
-		{% for row in "9"|range_list %}
-			<tr>
-			{% with forloop.counter0 as out_counter %}
-			{% for element in "9"|range_list %}
-				<td>
-					{% with out_counter|multiply:9 as in_counter %}
-					{% with in_counter|addition:forloop.counter0 as unique_id %}
-					<!-- WHY isnt the input tag working validating the input automatically???? -->
-					<!-- Name and ID of each square is set to to an integer - (0 to 80) inclusive, ROW MAJOR -->
-						<input name="{{ unique_id }}" id="{{ unique_id }}" type="number" min="1" max="9" style="border:none"/>
-					{% endwith %}
-					{% endwith %}
-				</td>
+	<form name="sudokuInput" method="post" action="{% url 'solve:display' %}">
+	{% csrf_token %}
+		<table class="table table-bordered">
+		<tbody>
+			{% for row in "9"|range_list %}
+				<tr class="row">
+				{% with forloop.counter0 as out_counter %}
+				{% for element in "9"|range_list %}
+					<td>
+						{% with out_counter|multiply:9 as in_counter %}
+						{% with in_counter|addition:forloop.counter0 as unique_id %}
+						<!-- WHY isnt the input tag working validating the input automatically???? -->
+						<!-- Name and ID of each square is set to to an integer - (0 to 80) inclusive, ROW MAJOR -->
+						
+							<input name="{{ unique_id }}" id="{{ unique_id }}" type="number" min="1" max="9" style="border:none;" class="input-sm"/>
+
+						{% endwith %}
+						{% endwith %}
+					</td>
+				{% endfor %}
+				{% endwith %}
+				</tr>
 			{% endfor %}
-			{% endwith %}
-			</tr>
-		{% endfor %}
-	</tbody>
-	</table>
-</div>
-<input type="submit" name="submit" id="submit"/>
+		</tbody>
+		</table>
+	<input type="submit" name="submit" id="submit"/>
 </form>
+</div>
 
 {% endblock %}
 

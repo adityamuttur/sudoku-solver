@@ -1,28 +1,11 @@
 {% extends "base.html" %}
 {% load extras %}
+
 {% block stylesheets %}
 	<style type="text/css">
-	.parentCube {
-		height:40px;
-	}
-	.childCube {
-		width:99px;
-	}
-	input[type="number"]
-	{
-		padding:0px;
-		margin-bottom:0px;
-		border:none;
-	}​
-	textarea:focus, input:focus{
-		outline: 0;
-	}
-	*:focus {
-		outline: 0;
-	}
-	table { 
-		border-spacing:10;
-		border-collapse:collapse;
+	table td { 
+		border-top: none; 
+		border-bottom: none; 
 	}
 	</style>
 {% endblock %}
@@ -32,17 +15,21 @@
 <br><br><br><br>
 
 <div class="container" id="sudoku">
-	<table class="table table-bordered">
+	<table class="table">
 	<tbody>
 		{% for row in grid %}
 			<tr>
 			{% for element in row %}
-				<td>{{ element }}</td>
+				<td style="outline: 2px solid">{{ element }}</td>
 			{% endfor %}
 			</tr>
 		{% endfor %}
 	</tbody>
 	</table>
+	<form action="{% url 'solve:input' %}">
+		<input type="submit" value="Solve Another One">
+	</form>
+
 </div>
 {% for posted_value in nothing %}
 	{{ posted_value }}

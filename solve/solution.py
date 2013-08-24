@@ -8,7 +8,6 @@ import signal
 import logging
 import threading
 
-logger = logging.getLogger(__name__)
 
 class FuncThread(threading.Thread):
 	def __init__(self, func):
@@ -48,7 +47,6 @@ class Solution(object):
 	def getTrialCelli(self):
 		for i in xrange(self.grid_size):
 			if self.grid[i] == '.':
-				logger.info('trial cell %s' % i)
 				return i
 
 	def isLegal(self, trialVal, trialCelli):
@@ -62,7 +60,6 @@ class Solution(object):
 				for i in trialSq:
 					if self.grid[i] != '.':
 						if trialVal == int(self.grid[i]):
-							logger.info('SQU')
 							return False
 
 		for eachRow in xrange(9):
@@ -71,7 +68,6 @@ class Solution(object):
 				for i in trialRow:
 					if self.grid[i] != '.':
 						if trialVal == int(self.grid[i]):
-							logger.info('ROW')
 							return False
 
 		for eachCol in xrange(9):
@@ -80,9 +76,7 @@ class Solution(object):
 				for i in trialCol:
 					if self.grid[i] != '.':
 						if trialVal == int(self.grid[i]):
-							logger.info('COL')
 							return False
-		logger.info('is legal cell %s set to %s ' % (trialCelli, trialVal))
 		return True
 
 	def setCell(self, trialVal, trialCelli):
@@ -91,19 +85,16 @@ class Solution(object):
 
 	def clearCell(self, trialCelli ):
 		self.grid[trialCelli] = '.'
-		logger.info('clear cell %s' % trialCelli)
 		return self.grid
 
 	def _hasSolution(self):
 		if self.isFull():
-			logger.info('SOLVED')
 			return True
 		else:
 			trialCelli = self.getTrialCelli()
 			trialVal = 1
 			solution_found = False
 			while ( solution_found != True) and (trialVal < 10):
-				logger.info('trial value %s' % trialVal)
 				if self.isLegal(trialVal, trialCelli):
 					self.grid = self.setCell(trialVal, trialCelli)
 					if self._hasSolution() == True:
@@ -139,7 +130,6 @@ class Solution(object):
 			# self.grid list element
 			# Thus hasSolution() HAS TO BE called here in order to set the solution
 			# Solution is set into a single list called self.grid
-			logger.error("No Solution")
 			# Trying to use the ogging module. But the fucking logfiles aren't being created
 			return False
 		i = 0
