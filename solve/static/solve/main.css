@@ -26,3 +26,19 @@ textarea:focus, input:focus{
 input[disabled='disabled'] {
     background: #efefef;
 }
+
+.padding {
+	padding-top: 45px;
+	margin-top: -40px;
+}
+
+.visible-phone.padding {
+}
+
+.visible-tablet.padding {
+}
+
+.visible-desktop.padding {
+	padding-top: 45px;
+	margin-top: -40px;
+}

@@ -8,9 +8,9 @@
 
 {% block content %}
 
-<br><br><br><br>
 
 <div class="container" id="sudoku">
+	<h1 class="padding">Sudoku Solver</h1>
 	<form name="sudokuInput" method="post" action="{% url 'solve:display' %}">
 	{% csrf_token %}
 		<table class="table table-bordered">
@@ -38,6 +38,7 @@
 		</table>
 	<input type="submit" name="submit" id="submit"/>
 </form>
+<div class="fb-like" data-href="http://192.168.2.7:8000/solve" data-width="450" data-show-faces="true" data-send="true"></div>
 </div>
 
 {% endblock %}
@@ -49,6 +50,15 @@
 		// 1. Minimum Boxes filled constraint - 10-16 say
 		// 2. Ensure all are single digit integers from 1-9 inclusive
 
+		(function(d, s, id) {
+			var js, fjs = d.getElementsByTagName(s)[0];
+			if (d.getElementById(id))
+				return;
+			js = d.createElement(s);
+			js.id = id;
+			js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+			fjs.parentNode.insertBefore(js, fjs);
+		}(document, 'script', 'facebook-jssdk'));
 		function getCookie(name) {
 			var cookieValue = null;
 			if (document.cookie && document.cookie != '') {
