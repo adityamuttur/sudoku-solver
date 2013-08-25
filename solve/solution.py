@@ -8,7 +8,6 @@ import signal
 import logging
 import threading
 
-
 class FuncThread(threading.Thread):
 	def __init__(self, func):
 		threading.Thread.__init__(self)
@@ -145,3 +144,4 @@ class Solution(object):
 				solution_row = []
 
 		return solution_grid
+
