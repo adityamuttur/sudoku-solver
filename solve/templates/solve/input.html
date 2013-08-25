@@ -1,27 +1,9 @@
 {% extends "base.html" %}
 {% load extras %}
+{% load static %}
+
 {% block stylesheets %}
-<style type="text/css">
-	.parentCube {
-		height:40px;
-	}
-	.childCube {
-		width:99px;
-	}
-	input[type="number"] {
-		padding:0px;
-		margin-bottom:0px;
-		border:none;
-		width: 100%;
-		!important;
-	}​
-	textarea:focus, input:focus{
-		outline: 0;
-	}
-	*:focus {
-		outline: 0;
-	}
-</style>
+	<link rel="stylesheet" href="{% static 'solve/main.css' %}">
 {% endblock %}
 
 {% block content %}
