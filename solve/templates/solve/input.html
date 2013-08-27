@@ -45,41 +45,31 @@
 {% block scripts %}
 <script type="text/javascript">
 	$(document).ready(function() {
-		// Need 2 things.
-		// 1. Minimum Boxes filled constraint - 10-16 say
-		// 2. Ensure all are single digit integers from 1-9 inclusive
-
 		var cells = new Array();
 		for (var i = 0; i < 81; i++) {
 			cells.push(i);
 		}
-
-		$(cells).each(function(index) {
-			var input_box_id = '#' + index.toString();
-			var cell_id = '#cell-element' + index.toString();
-			$(input_box_id).change(function() {
-				input_value = $(this).val();
-				if (input_value == "") {
-					$(cell_id).removeClass('invalid-value').addClass('valid-value', 1);
-					return true;
-				}
-				if (!$.isNumeric(input_value)) {
-					$(cell_id).removeClass('valid-value').addClass('invalid-value', 1);
-					alert('Enter Numeric Value');
-					return false;
-				}
-				else {
-					if (input_value < 1 || input_value > 9) {
-						$(cell_id).removeClass('valid-value').addClass('invalid-value', 1);
-						alert('Enter A Number Between 1 and 9 inclusive');
-						return false;
-					}
-					else {
-						$(cell_id).removeClass('invalid-value').addClass('valid-value', 1);
-					}
-				}
-			});
-		});
+		// $('#gridForm').submit(function() {
+		// 	var value = $(cells).each(function(index) {
+		// 		var response;
+		// 		var input_box_id = '#' + index.toString();
+		// 		var cell_id = '#cell-element' + index.toString();
+		// 		return $(input_box_id).ready(function() {
+		// 			response = displayAlert($(input_box_id).val(), cell_id);
+		// 			if (response == false) {
+		// 				alert($(input_box_id).val());
+		// 				return false;
+		// 			}
+		// 		});
+		// 		alert("aaa" + $(input_box_id).val());
+		// 	});
+		// 	alert($.isEmptyObject(value));
+		// 	if (!$.isEmptyObject(value))
+		// 		return false;
+		// 	else
+		// 		return true;
+		// });
+		verification(cells);
 
 		function getCookie(name) {
 				var cookieValue = null;
@@ -108,5 +98,42 @@
 				}
 			});
 	});
+	function verification (cells) {
+		$(cells).each(function(index) {
+			var input_box_id = '#' + index.toString();
+			var cell_id = '#cell-element' + index.toString();
+			$(input_box_id).change(function() {
+				displayAlert($(this).val(), cell_id);
+			});
+		});
+	}
+	function displayAlert(input_value, cell_id) {
+		if (input_value == "") {
+			$(cell_id).removeClass('invalid-value').addClass('valid-value');
+			console.log('Empty Cell');
+			return true;
+		}
+		console.log('Not an Empty cell');
+		if (!$.isNumeric(input_value)) {
+			$(cell_id).removeClass('valid-value').addClass('invalid-value');
+			console.log('not a numeric value');
+			alert('Enter Numeric Value');
+			return false;
+		}
+		else {
+			console.log('numeric value');
+			if (input_value < 1 || input_value > 9) {
+				$(cell_id).removeClass('valid-value').addClass('invalid-value');
+				console.log('invalid range');
+				alert('Enter A Number Between 1 and 9 inclusive');
+				return false;
+			}
+			else {
+				console.log('valid input');
+				$(cell_id).removeClass('invalid-value').addClass('valid-value');
+				return true;
+			}
+		}
+	}
 </script>
 {% endblock %}
