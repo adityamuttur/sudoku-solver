@@ -9,6 +9,7 @@ input[type="number"] {
 	margin-bottom:0px;
 	border:none;
 	width: 100%;
+	text-align: center;
 	!important;
 }​
 textarea:focus, input:focus{
@@ -41,4 +42,14 @@ input[disabled='disabled'] {
 .visible-desktop.padding {
 	padding-top: 45px;
 	margin-top: -40px;
+}
+
+.invalid-value {
+	background-color: #c0392b;
+	color: #2c3e50;
+	!important;
+}
+
+.valid-value {
+	background-color: #ffffff;
 }

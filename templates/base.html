@@ -13,24 +13,27 @@
 </head>
 
 <body>
-<div class="navbar navbar-inverse navbar-fixed-top">
+<br><br><br><br>
 	<div class="container">
-		<div class="navbar-header">
-			<button class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse" type="button">
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-			</button>
-			<a class="navbar-brand" href="#">Sudoku Solver</a>
-		</div>
-		<div class="collapse navbar-collapse">
-			<ul class="nav navbar-nav">
-				{% block nav_bar %} {% endblock %}
-			</ul>
+		<h1 class="padding">Sudoku Solver</h1>
+	</div>
+	<div class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container">
+			<div class="navbar-header">
+				<button class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse" type="button">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#">Sudoku Solver</a>
+			</div>
+			<div class="collapse navbar-collapse">
+				<ul class="nav navbar-nav">
+					{% block nav_bar %} {% endblock %}
+				</ul>
+			</div>
 		</div>
 	</div>
-</div>
-
 {% block content %}
 {% endblock %}
 </body>
