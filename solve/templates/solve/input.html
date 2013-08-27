@@ -12,9 +12,9 @@
 <div class="container" id="sudoku">
 	<br>
 	<h2 class="padding">Enter Grid</h2>
-	<form name="sudokuInput" method="post" action="{% url 'solve:display' %}">
+	<form name="sudokuInput" method="post" action="{% url 'solve:display' %}" id="gridForm">
 	{% csrf_token %}
-		<table class="table table-bordered">
+		<table class="table table-bordered" id="sudokuInputGrid">
 		<tbody>
 			{% for row in "9"|range_list %}
 				<tr class="row">
@@ -49,54 +49,64 @@
 		// 1. Minimum Boxes filled constraint - 10-16 say
 		// 2. Ensure all are single digit integers from 1-9 inclusive
 
-		var input_box_id = '#1';
-		var cell_id = '#cell-element1';
-		$(input_box_id).change(function() {
-			input_value = $(this).val();
-			if (!$.isNumeric(input_value)) {
-				$('#cell-element1').removeClass('valid-value').addClass('invalid-value', 1);
-				alert('Enter Numeric Value');
-				return false;
-			}
-			else {
-				if (input_value < 1 || input_value > 9) {
-					$('#cell-element1').removeClass('valid-value').addClass('invalid-value', 1);
-					alert('Enter A Number Between 1 and 9 inclusive');
+		var cells = new Array();
+		for (var i = 0; i < 81; i++) {
+			cells.push(i);
+		}
+
+		$(cells).each(function(index) {
+			var input_box_id = '#' + index.toString();
+			var cell_id = '#cell-element' + index.toString();
+			$(input_box_id).change(function() {
+				input_value = $(this).val();
+				if (input_value == "") {
+					$(cell_id).removeClass('invalid-value').addClass('valid-value', 1);
+					return true;
+				}
+				if (!$.isNumeric(input_value)) {
+					$(cell_id).removeClass('valid-value').addClass('invalid-value', 1);
+					alert('Enter Numeric Value');
 					return false;
 				}
 				else {
-					$('#cell-element1').removeClass('invalid-value').addClass('valid-value', 1);
-				}
-			}
-		})
-
-
-	function getCookie(name) {
-			var cookieValue = null;
-			if (document.cookie && document.cookie != '') {
-				var cookies = document.cookie.split(';');
-				for (var i = 0; i < cookies.length; i++) {
-					var cookie = jQuery.trim(cookies[i]);
-					if (cookie.substring(0, name.length + 1) == (name + '=')) {
-						cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-						break;
+					if (input_value < 1 || input_value > 9) {
+						$(cell_id).removeClass('valid-value').addClass('invalid-value', 1);
+						alert('Enter A Number Between 1 and 9 inclusive');
+						return false;
+					}
+					else {
+						$(cell_id).removeClass('invalid-value').addClass('valid-value', 1);
 					}
 				}
-			}
-			return cookieValue;
-		}
-		var csrftoken = getCookie('csrftoken');
-		function csrfSafeMethod(method) {
-			return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
-		}
-		$.ajaxSetup({
-			crossDomain: false, // obviates need for sameOrigin test
-			beforeSend: function(xhr, settings) {
-				if (!csrfSafeMethod(settings.type)) {
-					xhr.setRequestHeader("X-CSRFToken", csrftoken);
-				}
-			}
+			});
 		});
+
+		function getCookie(name) {
+				var cookieValue = null;
+				if (document.cookie && document.cookie != '') {
+					var cookies = document.cookie.split(';');
+					for (var i = 0; i < cookies.length; i++) {
+						var cookie = jQuery.trim(cookies[i]);
+						if (cookie.substring(0, name.length + 1) == (name + '=')) {
+							cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+							break;
+						}
+					}
+				}
+				return cookieValue;
+			}
+			var csrftoken = getCookie('csrftoken');
+			function csrfSafeMethod(method) {
+				return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+			}
+			$.ajaxSetup({
+				crossDomain: false, // obviates need for sameOrigin test
+				beforeSend: function(xhr, settings) {
+					if (!csrfSafeMethod(settings.type)) {
+						xhr.setRequestHeader("X-CSRFToken", csrftoken);
+					}
+				}
+			});
 	});
 </script>
 {% endblock %}
