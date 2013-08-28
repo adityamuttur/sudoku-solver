@@ -1,12 +1,16 @@
 {% extends "base.html" %}
+{% load static %}
+
+{% block stylesheets %}
+	<link rel="stylesheet" href="{% static 'solve/main.css' %}">
+{% endblock %}
 
 {% block content %}
-<br><br><br><br>
-
 <div class="container">
-	No Solution :'(
-	<form action="{% url 'solve:input' %}">
-		<input type="submit" value="Send Valid Grid This Time">
+	<h2 class="padding" style='text-align: center;'>NO SOLUTION</h2>
+	<br><br>
+	<form action="{% url 'solve:input' %}" class="text-center">
+		<input type="submit" class="btn btn-primary" value="Enter Valid Grid"/>
 	</form>
 </div>
 

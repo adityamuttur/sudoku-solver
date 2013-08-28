@@ -119,7 +119,7 @@ PROJECT_ROOT = here("..")
 root = lambda * x: os.path.join(os.path.abspath(PROJECT_ROOT), *x)
 
 TEMPLATE_DIRS = (
-    root('templates'),  
+    root('templates'),
 )
 
 INSTALLED_APPS = (

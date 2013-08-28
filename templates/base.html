@@ -10,22 +10,40 @@
 	<link rel="stylesheet" href="{% static 'css/bootstrap-theme.min.css' %}">
 	<script src="{% static 'js/bootstrap.min.js' %}"></script>
 	{% block stylesheets %}{% endblock %}
+	<style type="text/css">
+	footer {
+		color: #666;
+		background: #222;
+		padding: 17px 0 18px 0;
+		border-top: 1px solid #000;
+	}
+	footer a {
+		color: #999;
+	}
+	footer a:hover {
+		color: #efefef;
+	}
+	</style>
 </head>
 
 <body>
 <br><br><br><br>
 	<div class="container">
-		<h1 class="padding">Sudoku Solver</h1>
 	</div>
-	<div class="navbar navbar-inverse navbar-fixed-top">
+
+ 	<div class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container">
 			<div class="navbar-header">
-				<button class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse" type="button">
+		color: #666;
+		background: #222;
+		padding: 17px 0 18px 0;
+		border-top: 1px solid #000;
+			<button class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse" type="button">
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="#">Sudoku Solver</a>
+				<a class="navbar-brand" href="{% url 'home' %}">Sudoku Solver</a>
 			</div>
 			<div class="collapse navbar-collapse">
 				<ul class="nav navbar-nav">
@@ -34,9 +52,16 @@
 			</div>
 		</div>
 	</div>
-{% block content %}
-{% endblock %}
+	{% block content %}{% endblock %}
 </body>
 </html>
 {% block scripts %}
 {% endblock %}
+
+
+<footer class="navbar-fixed-bottom">
+	<div class="container">
+		&#169; 2013 <a href="https://github.com/sourcecode123">Aditya Muttur</a>  
+	</div>
+</footer>
+
