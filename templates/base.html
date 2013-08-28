@@ -23,26 +23,41 @@
 	footer a:hover {
 		color: #efefef;
 	}
+	.navbar {
+		-webkit-border-radius: 0 !important;
+		-moz-border-radius: 0 !important;
+		border-radius: 0 !important;
+	}
+
+	html, body {
+		height: 100%;
+	}
+
+	#wrap {
+		min-height: 66%;
+	}
+
+	#main {
+		overflow:auto;
+		padding-bottom: 150px;
+	}
+
+	.footer {
+		position: relative;
+		margin-top: -150px;
+		height: 150px;
+		clear:both;
+		padding-top: 20px;
+	}
 	</style>
 </head>
 
 <body>
-<br><br><br><br>
 	<div class="container">
 	</div>
-
- 	<div class="navbar navbar-inverse navbar-fixed-top">
+ 	<div class="navbar navbar-inverse">
 		<div class="container">
 			<div class="navbar-header">
-		color: #666;
-		background: #222;
-		padding: 17px 0 18px 0;
-		border-top: 1px solid #000;
-			<button class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse" type="button">
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-				</button>
 				<a class="navbar-brand" href="{% url 'home' %}">Sudoku Solver</a>
 			</div>
 			<div class="collapse navbar-collapse">
@@ -53,15 +68,18 @@
 		</div>
 	</div>
 	{% block content %}{% endblock %}
+
+<div id="wrap">
+	<div id="main" class="container clear-top"></div>
+</div>
+
+<footer>
+	<div class="container">
+		By <a href="https://github.com/sourcecode123">Aditya Muttur</a>, 2013
+	</div>
+</footer>
+
 </body>
 </html>
 {% block scripts %}
 {% endblock %}
-
-
-<footer class="navbar-fixed-bottom">
-	<div class="container">
-		&#169; 2013 <a href="https://github.com/sourcecode123">Aditya Muttur</a>  
-	</div>
-</footer>
-
