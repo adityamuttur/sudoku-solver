@@ -4,6 +4,7 @@ import os
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
+BASE_DIR = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
@@ -14,7 +15,7 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': '/home/aditya/Coding/DjangoStuff/SudokuSolver/sql_db',
+        'NAME': os.path.join(BASE_DIR, 'sql_db'),
         'USER': '',
         'PASSWORD': '',
         'HOST': '', # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
@@ -62,13 +63,11 @@ MEDIA_URL = ''
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/var/www/example.com/static/"
-STATIC_ROOT = ''
+STATIC_ROOT = '/var/www'
 
 # URL prefix for static files.
 # Example: "http://example.com/static/", "http://static.example.com/"
 STATIC_URL = '/static/'
-
-BASE_DIR = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 
 # Additional locations of static files
 STATICFILES_DIRS = (
