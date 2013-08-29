@@ -15,7 +15,7 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'sql_db'),
+        'NAME': os.path.join(BASE_DIR, 'sqlite.db'),
         'USER': '',
         'PASSWORD': '',
         'HOST': '', # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.

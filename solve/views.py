@@ -22,7 +22,10 @@ def solve_sudoku(request):
 		else:
 			sudoku_input.append(input_character)
 
-	sudoku_solution = Solution(sudoku_input).returnGrid()
+	sudoku_solution = Solution(sudoku_input).return_grid()
+	# Save session to display the contents of the solution of the sudoku
+	# in the display_sudoku view
+	# Always redirect after POST.
 	request.session['sudoku_solution'] = repr(sudoku_solution)
 
 	if not sudoku_solution:

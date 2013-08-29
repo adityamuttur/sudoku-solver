@@ -1,11 +1,4 @@
-import os
-import sys
 import copy
-import time
-import errno
-import Queue
-import signal
-import logging
 import threading
 
 class FuncThread(threading.Thread):
@@ -22,92 +15,80 @@ class FuncThread(threading.Thread):
 			threading.Thread._Thread__stop(self)
 
 class Solution(object):
-	def __init__(self, input_grid=None):
-		if input_grid is None:
-			input_grid = [
-							'.', '.', '.', '.', '.', '.', '.', '.', '.', 
-							'.', '.', '.', '.', '.', '.', '.', '.', '.', 
-							'.', '.', '.', '.', '.', '.', '.', '.', '.',
-							'.', '.', '.', '.', '.', '.', '.', '.', '.', 
-							'.', '.', '4', '6', '2', '9', '5', '1', '8', 
-							'1', '9', '6', '3', '5', '8', '2', '7', '4', 
-							'4', '7', '3', '8', '9', '2', '6', '5', '1', 
-							'6', '8', '.', '.', '3', '1', '.', '4', '.', 
-							'.', '.', '.', '.', '.', '.', '3', '8', '.'
-						]
+	def __init__(self, input_grid):
 		self.input_grid = input_grid
 		self.grid_size = 81
 		self.grid = copy.deepcopy(self.input_grid)
 		self.is_solution = False
 
-	def isFull(self):
+	def is_full(self):
 		return self.grid.count('.') == 0
 
-	def getTrialCelli(self):
+	def get_trial_cell_i(self):
 		for i in xrange(self.grid_size):
 			if self.grid[i] == '.':
 				return i
 
-	def isLegal(self, trialVal, trialCelli):
+	def is_legal(self, trial_value, trial_cell_i):
 		cols = 0
-		for eachSq in xrange(9):
-			trialSq = [ x+cols for x in xrange(3) ] + [ x+9+cols for x in xrange(3) ] + [ x+18+cols for x in xrange(3) ]
+		for each_square in xrange(9):
+			trial_square = [x+cols for x in xrange(3)] + [x+9+cols for x in xrange(3)] + [x+18+cols for x in xrange(3)]
 			cols +=3
 			if cols in [9, 36]:
 				cols +=18
-			if trialCelli in trialSq:
-				for i in trialSq:
+			if trial_cell_i in trial_square:
+				for i in trial_square:
 					if self.grid[i] != '.':
-						if trialVal == int(self.grid[i]):
+						if trial_value == int(self.grid[i]):
 							return False
 
-		for eachRow in xrange(9):
-			trialRow = [ x+(9*eachRow) for x in xrange (9) ]
-			if trialCelli in trialRow:
-				for i in trialRow:
+		for each_row in xrange(9):
+			trial_row = [ x+(9*each_row) for x in xrange (9) ]
+			if trial_cell_i in trial_row:
+				for i in trial_row:
 					if self.grid[i] != '.':
-						if trialVal == int(self.grid[i]):
+						if trial_value == int(self.grid[i]):
 							return False
 
-		for eachCol in xrange(9):
-			trialCol = [ (9*x)+eachCol for x in xrange (9) ]
-			if trialCelli in trialCol:
-				for i in trialCol:
+		for each_col in xrange(9):
+			trial_col = [ (9*x)+each_col for x in xrange (9) ]
+			if trial_cell_i in trial_col:
+				for i in trial_col:
 					if self.grid[i] != '.':
-						if trialVal == int(self.grid[i]):
+						if trial_value == int(self.grid[i]):
 							return False
 		return True
 
-	def setCell(self, trialVal, trialCelli):
-		self.grid[trialCelli] = trialVal
+	def set_cell(self, trial_value, trial_cell_i):
+		self.grid[trial_cell_i] = trial_value
 		return self.grid
 
-	def clearCell(self, trialCelli ):
-		self.grid[trialCelli] = '.'
+	def clear_cell(self, trial_cell_i ):
+		self.grid[trial_cell_i] = '.'
 		return self.grid
 
-	def _hasSolution(self):
-		if self.isFull():
+	def _has_solution(self):
+		if self.is_full():
 			return True
 		else:
-			trialCelli = self.getTrialCelli()
-			trialVal = 1
+			trial_cell_i = self.get_trial_cell_i()
+			trial_value = 1
 			solution_found = False
-			while ( solution_found != True) and (trialVal < 10):
-				if self.isLegal(trialVal, trialCelli):
-					self.grid = self.setCell(trialVal, trialCelli)
-					if self._hasSolution() == True:
+			while (solution_found != True) and (trial_value < 10):
+				if self.is_legal(trial_value, trial_cell_i):
+					self.grid = self.set_cell(trial_value, trial_cell_i)
+					if self._has_solution() == True:
 						solution_found = True
 						self.is_solution = solution_found
 						return True
 					else:
-						self.clearCell( trialCelli )
-				trialVal += 1
+						self.clear_cell( trial_cell_i )
+				trial_value += 1
 			self.is_solution = solution_found
 			return solution_found
 
-	def hasSolution(self):
-		it = FuncThread(self._hasSolution)
+	def has_solution(self):
+		it = FuncThread(self._has_solution)
 		# starts the thread....
 		it.start()
 		# blocks the main thread for 5 seconds and then returns
@@ -122,14 +103,13 @@ class Solution(object):
 		else:
 			return it.result
 
-	def returnGrid(self=None):
-		if not self.hasSolution():
-			# Calling hasSolution not only checks if the sudoku has a solution
+	def return_grid(self=None):
+		if not self.has_solution():
+			# Calling has_solution not only checks if the sudoku has a solution
 			# but is also responsible for setting the solution to the grid into 
 			# self.grid list element
-			# Thus hasSolution() HAS TO BE called here in order to set the solution
+			# Thus has_solution() HAS TO BE called here in order to set the solution
 			# Solution is set into a single list called self.grid
-			# Trying to use the ogging module. But the fucking logfiles aren't being created
 			return False
 		i = 0
 		solution_grid = []
@@ -144,4 +124,3 @@ class Solution(object):
 				solution_row = []
 
 		return solution_grid
-
