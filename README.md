@@ -12,7 +12,10 @@ How to run
 
 	2. cd into the main directory of the Django app
 
-	3. Run the command "python manage.py runserver"
+	3. run "python manage.py syncdb" to create the sqlite database file.
+	   This is required to save session when solving the sudoku
+
+	4. Run "python manage.py runserver"
 
 This uses Twitter Bootstrap 3.0 for its web page design.
 
